@@ -80,7 +80,7 @@ class Application implements Bootable {
 				$this->registerClass( $class );
 			},
 			array(
-				// \FES\Manager\AdminManager::class,
+				\FES\Manager\AdminManager::class,
 				// \FES\Manager\LogManager::class,
 			)
 		);
