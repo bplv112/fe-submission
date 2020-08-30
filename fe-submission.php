@@ -31,7 +31,7 @@ if ( ! defined( 'FES_URL' ) ) {
 
 // Tempate path.
 if ( ! defined( 'FES_TEMPLATE' ) ) {
-	define( 'FES_TEMPLATE', FES_DIRECTORY . 'app/views/' );
+	define( 'FES_TEMPLATE', FES_DIRECTORY . 'app/Views/' );
 }
 
 

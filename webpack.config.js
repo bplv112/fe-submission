@@ -117,9 +117,6 @@ var jsConfig = Object.assign( {}, {
 	plugins: [
 		new SystemBellPlugin(),
 		// Automatically load modules instead of having to import or require them everywhere.
-		new webpack.ProvidePlugin({
-			Select2: '@wpmudev/shared-ui/js/select2.full.js'
-		})
 	]
 } );
 

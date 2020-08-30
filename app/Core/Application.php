@@ -81,7 +81,7 @@ class Application implements Bootable {
 			},
 			array(
 				\FES\Manager\AdminManager::class,
-				// \FES\Manager\LogManager::class,
+				\FES\Manager\PublicManager::class,
 			)
 		);
 	}
