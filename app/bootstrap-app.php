@@ -6,10 +6,8 @@
  * to run. Classes utilize the PSR-4 autoloader in Composer which is defined in
  * `composer.json`.
  *
- * @package   BrokenLinkChecker
- * @author    WPMUDEV
- * @license   https://www.gnu.org/licenses/gpl-2.0.html GPL-2.0-or-later
- * @link      https://premium.wpmudev.org/
+ * @package   FeSubmission
+ * @author    bplv
  */
 
 namespace BLC;
@@ -28,14 +26,13 @@ array_map(
 	},
 	array(
 		'functions-helpers',
-		'functions-instances',
 	)
 );
 
 /**
  * Action hook after the plugin has been bootstrapped
  *
- * @since 2.0.0
+ * @since 1.0.0
  * @param Obj $app an instance of the plugin/application
  */
 

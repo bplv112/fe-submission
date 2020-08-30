@@ -15,7 +15,7 @@ use FES\Abstracts\Manager;
 /**
  * Admin Manager.
  *
- * @since  2.0.0
+ * @since  1.0.0
  * @access public
  */
 class AdminManager extends Manager {
@@ -23,22 +23,22 @@ class AdminManager extends Manager {
 	/**
 	 * Boot the classes that are handled by this manager.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
 	public function boot() {
-		// Boot the Admin Interface class instance.
+		// Boot the Admin class instance.
 		self::$classes['Admin']->boot();
 
-		// Boot the Options class instance.
-		self::$classes['Options']->boot();
+		// Boot the PostType class instance.
+		self::$classes['PostType']->boot();
 	}
 
 	/**
 	 * Register the classes that are handled by the manager.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
@@ -47,7 +47,7 @@ class AdminManager extends Manager {
 		self::$classes['Admin'] = $this->app->resolve( \FES\Classes\Admin::class );
 
 		// Register the Options class instance.
-		self::$classes['Options'] = $this->app->resolve( \FES\Classes\Options::class );
+		self::$classes['PostType'] = $this->app->resolve( \FES\Classes\PostType::class );
 
 	}
 }

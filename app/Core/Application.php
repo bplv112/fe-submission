@@ -16,7 +16,7 @@ use FES\Interfaces\Bootable;
 /**
  * Main Application Plugin Class.
  *
- * @since  2.0.0
+ * @since  1.0.0
  * @access public
  */
 class Application implements Bootable {
@@ -24,16 +24,16 @@ class Application implements Bootable {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @var    string
 	 */
-	const VERSION = '2.0.0';
+	const VERSION = '1.0.0';
 
 	/**
 	 * Array of classes to instanciate.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @var    array
 	 */
@@ -42,7 +42,7 @@ class Application implements Bootable {
 	/**
 	 * Initiates the class.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
@@ -55,7 +55,7 @@ class Application implements Bootable {
 	/**
 	 * Registers the classes.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @param string $class Name of the class to register.
 	 * @return void
@@ -70,7 +70,7 @@ class Application implements Bootable {
 	/**
 	 * Register default managers
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @return void
 	 */
@@ -89,7 +89,7 @@ class Application implements Bootable {
 	/**
 	 * Creates a new instance of a manager class.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @param string $class Name of the class to resolve.
 	 * @return object
@@ -101,7 +101,7 @@ class Application implements Bootable {
 	/**
 	 * Resolve the classes.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @param string $class Name of the class to resolve.
 	 * @return object
@@ -113,7 +113,7 @@ class Application implements Bootable {
 	/**
 	 * Calls a `boot()` method if it exists.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @param string $class Name of the class to boot.
 	 * @return void
@@ -127,7 +127,7 @@ class Application implements Bootable {
 	/**
 	 * Calls a `register()` method if it exists.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @param string $class Name of the class to boot.
 	 * @return void
@@ -141,7 +141,7 @@ class Application implements Bootable {
 	/**
 	 * Returns an array of classes.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @return array
 	 */
@@ -152,7 +152,7 @@ class Application implements Bootable {
 	/**
 	 * Calls the `register()`
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @return void
 	 */
@@ -165,7 +165,7 @@ class Application implements Bootable {
 	/**
 	 * Calls the `boot()` method
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access protected
 	 * @return void
 	 */

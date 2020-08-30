@@ -19,7 +19,7 @@ namespace FES\Interfaces;
 /**
  * Bootable interface.
  *
- * @since  2.0.0
+ * @since  1.0.0
  * @access public
  */
 interface Bootable {
@@ -27,7 +27,7 @@ interface Bootable {
 	/**
 	 * Boots the class by running `add_action()` and `add_filter()` calls.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
