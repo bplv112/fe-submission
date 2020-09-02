@@ -10,3 +10,59 @@
     font: 500 15px/22px Roboto,Arial,sans-serif;
     letter-spacing: -.25px;
 }
+.sui-error-message {
+    display: block;
+    margin-top: 8px;
+    color: #ff6d6d;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+}
+.sui-form-field-error {
+    border-bottom: 2px solid #ff6d6d;
+}
+
+//codepen refered :https://codepen.io/raubaca/pen/VejpQP
+/* Reset Select */
+.sui-select select {
+-webkit-appearance: none;
+-moz-appearance: none;
+-ms-appearance: none;
+appearance: none;
+outline: 0;
+box-shadow: none;
+border: 0 !important;
+background-image: none;
+}
+/* Remove IE arrow */
+.sui-select select::-ms-expand {
+display: none;
+}
+/* Custom Select */
+.sui-select {
+position: relative;
+display: flex;
+width: 20em;
+height: 3em;
+line-height: 3;
+overflow: hidden;
+border-radius: .25em;
+}
+.sui-select select {
+flex: 1;
+padding: 0 .5em;
+cursor: pointer;
+}
+/* Arrow */
+.sui-select::after {
+content: '\25BC';
+position: absolute;
+top: 0;
+right: 0;
+padding: 0 1em;
+cursor: pointer;
+pointer-events: none;
+-webkit-transition: .25s all ease;
+-o-transition: .25s all ease;
+transition: .25s all ease;
+}

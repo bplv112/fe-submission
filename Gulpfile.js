@@ -200,5 +200,7 @@ gulp.task( 'dev:config', async function() {
 // Task: Build admin files
 gulp.task( 'dev', gulp.series(
 	'dev:config',
-	'build'
+	'build',
 ));
+
+

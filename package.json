@@ -49,7 +49,7 @@
 		},
 		"scripts": {
 				"build": "gulp build",
-				"dev": "npm install && webpack -p --progress && gulp dev"
+				"dev": "webpack -p --progress && gulp dev"
 		},
 		"repository": {
 				"type": "git",

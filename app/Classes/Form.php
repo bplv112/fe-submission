@@ -30,7 +30,10 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function boot() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_shortcode( 'display_fe_form', array( $this, 'display_form' ) );
+		add_filter( 'body_class', array( $this, 'add_body_class' ) );
+		add_action( 'wp_ajax_fes_submit_post', array( $this, 'process_form' ) );
 	}
 
 	/**
@@ -61,9 +64,6 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function display_form() {
-
-		//only enqueue style when shortcode is active.
-		$this->enqueue();
 		AdminManager::$classes['Admin']->render( 'form' );
 	}
 
@@ -75,5 +75,86 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function has_caps() {
+	}
+
+	/**
+	 * Add body class if form is present.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return array
+	 */
+	public function add_body_class( $classes ) {
+		global $post;
+		if( isset( $post->post_content ) && has_shortcode( $post->post_content, 'display_fe_form' ) ) {
+			$classes[] = 'fes-form-fe';
+		}
+		return $classes;
+	}
+
+	/**
+	 * Process the post submit form.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function process_form() {
+
+		// Do nothing if function was called incorrectly.
+		if ( empty( $_REQUEST['action'] ) ) {
+			wp_send_json_error(
+				array( 'message' => __( 'Required field missing', 'fe-submission' ) )
+			);
+			exit;
+		}
+
+		$nonce = $_REQUEST['fes_submit_post_nonce']; //phpcs:ignore
+
+		// Do nothing if the nonce is invalid.
+		if ( ! wp_verify_nonce( $nonce, $_REQUEST['action'] ) ) {
+			wp_send_json_error(
+				array( 'message' => __( 'Oops, security breach', 'fe-submission' ) )
+			);
+			exit;
+		}
+
+		$form_validation = $this->validate_form( $_REQUEST );
+
+		if( empty( $form_validation ) ) {
+
+		} else {
+			wp_send_json_error( $form_validation );
+		}
+	}
+
+	/**
+	 * Validate the form.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function validate_form( $data ) {
+		$error = array();
+
+		// Check for empty Data.
+		if( empty( $data ) ) {
+			$error = array( 'message' => __( 'Oops, empty data', 'fe-submission' ) );
+		}
+
+		foreach( $data as $key => $value ) {
+			if( empty( $value ) ) {
+				$fields[] = $key;
+			}
+		}
+
+		if( ! $validated ) {
+			$error = array( 'message' => __( 'Oops, mandatory fields missing', 'fe-submission' ) );
+			$error['fields'] = $fields;
+			$error['fields_message'] = __( 'Please fill out this field, it is mandatory and cannot be left empty', 'fe-submission' );
+		}
+
+		return $error;
 	}
 }
