@@ -11,6 +11,8 @@
 namespace FES\Classes;
 
 use FES\Interfaces\Bootable;
+use FES\Manager\PublicManager as PublicManager;
+
 /**
  * Plugin Class handling admin pages.
  *

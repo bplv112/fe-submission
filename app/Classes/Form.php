@@ -15,7 +15,7 @@ use FES\Manager\AdminManager;
 
 
 /**
- * Plugin Class handling admin pages.
+ * Plugin Class handling form.
  *
  * @since  1.0.0
  * @access public
@@ -64,6 +64,11 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function display_form() {
+
+		if( ! $this->has_caps() ){
+			return;
+		}
+
 		AdminManager::$classes['Admin']->render( 'form' );
 	}
 
@@ -72,9 +77,20 @@ class Form implements Bootable {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
+	 * @return bool
 	 */
 	public function has_caps() {
+		$user = \wp_get_current_user();
+
+		// Current we're only checking for author role.
+		// For extending you can use this feature to check caps.
+		$user_role = apply_filters( 'fes_extend_user_role', in_array( 'author', (array) $user->roles ) );
+
+		if( is_user_logged_in() && $user_role ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -97,7 +113,7 @@ class Form implements Bootable {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
+	 * @return object
 	 */
 	public function process_form() {
 
@@ -136,6 +152,8 @@ class Form implements Bootable {
 				wp_send_json_error( $error );
 			}
 
+			\update_post_meta( $post_id, 'is_fes_draft', true );
+
 			// If post inserted successfully insert image.
 			$this->insert_featured_image( $post_id, $data['fe-post-image'] );
 
@@ -155,7 +173,7 @@ class Form implements Bootable {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
+	 * @return array
 	 */
 	public function validate_form( $data ) {
 		$error            = array();
@@ -192,7 +210,7 @@ class Form implements Bootable {
 	 *
 	 * @since  1.0.0
 	 * @access public
-	 * @return void
+	 * @return int|wp_error
 	 */
 	public function save_post( $data ) {
 		// After all the validation here we are.

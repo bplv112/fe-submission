@@ -30,6 +30,7 @@ class PublicManager extends Manager {
 	public function boot() {
 		// Boot the Admin class instance.
 		self::$classes['Form']->boot();
+		self::$classes['PostList']->boot();
 	}
 
 	/**
@@ -42,6 +43,7 @@ class PublicManager extends Manager {
 	public function register() {
 		// Register the Admin Interface class instance.
 		self::$classes['Form'] = $this->app->resolve( \FES\Classes\Form::class );
+		self::$classes['PostList'] = $this->app->resolve( \FES\Classes\PostList::class );
 
 	}
 }
