@@ -82,11 +82,12 @@ class PostList implements Bootable {
 	 * @return object
 	 */
 	public function get_posts_query() {
+		$posts_per_page = apply_filters( 'fes_post_per_page_list', 10 );
 		$post_args = array(
 			'meta_key'       => 'is_fes_draft',
 			'post_type'      => 'any',
 			'post_status'    => 'draft',
-			'posts_per_page' => 10,
+			'posts_per_page' => $posts_per_page,
 			'orderby' 		 => 'date',
             'order'   		 => 'ASC',
 		);
