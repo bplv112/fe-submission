@@ -27,6 +27,7 @@
 			// submit post form.
 			this.$el.on( 'submit', '.fes-post-form', function( e ) {
 				e.preventDefault();
+				$( this ).find( '.sui-loader' ).addClass( 'sui-loading' );
 				self.$data = new FormData( this );
 				self.submitPost( this );
 			});
@@ -49,6 +50,7 @@
 			.done( res => {
 				if ( false === res.success ) {
 					$( this ).find( '.error-message' ).append( res.data.message );
+					$( '#submit-post-fe' ).find( '.sui-loader' ).removeClass( 'sui-loading' );
 					if ( res.data.fields ) {
 						$.each( res.data.fields, function( key, value ) {
 							$( '#' + value + '-error' ). append( res.data.fields_message );
@@ -57,7 +59,11 @@
 						});
 					}
 				} else if ( true === res.success ) {
-					console.log( res );
+					$( '#submit-post-fe' ).find( '.sui-loader' ).removeClass( 'sui-loading' );
+					$( '.fes-post-form' ).hide();
+					$( '.fes-success-message' ).fadeIn( 650 );
+					$( '#sui-content' )[0].scrollIntoView();
+
 				}
 			});
 		},

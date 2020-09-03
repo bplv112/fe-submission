@@ -128,8 +128,23 @@ class Form implements Bootable {
 		$form_validation = $this->validate_form( $data );
 
 		if( empty( $form_validation ) ) {
-			var_dump( $data );
-			// $this->save_post( $data );
+			$post_id = $this->save_post( $data );
+
+			// If post not insert proper.
+			if( is_wp_error( $post_id ) ) {
+				$error = array( 'message' => $post_id->get_error_message() );
+				wp_send_json_error( $error );
+			}
+
+			// If post inserted successfully insert image.
+			$this->insert_featured_image( $post_id, $data['fe-post-image'] );
+
+			// Send success email.
+			$this->send_success_email( $post_id );
+
+			// If all okay send success.
+			wp_send_json_success();
+
 		} else {
 			wp_send_json_error( $form_validation );
 		}
@@ -143,7 +158,8 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function validate_form( $data ) {
-		$error = array();
+		$error            = array();
+		$fields           = array();
 		$mandatory_fields = \FES\get_mandatory_fields();
 
 		// Check for empty Data.
@@ -153,6 +169,11 @@ class Form implements Bootable {
 
 		foreach( $data as $key => $value ) {
 			if( empty( $value ) && in_array( $key, $mandatory_fields ) ) {
+				$fields[] = $key;
+			}
+
+			// A little step further for image field.
+			if( 'fe-post-image' === $key && empty( $data[$key]['tmp_name'] ) ) {
 				$fields[] = $key;
 			}
 		}
@@ -174,7 +195,83 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function save_post( $data ) {
+		// After all the validation here we are.
+		// Last place to change the data if needed through extensions.
+		$data = apply_filters( 'fes_insert_post_data', $data );
 
+		// Post data array.
+		$post_data_array = array(
+			'post_title'   => \sanitize_text_field( $data['fe-post-title'] ),
+			'post_content' => \wp_kses_post( $data['fe-post-content'] ),
+			'post_excerpt' => \sanitize_text_field( $data['fe-post-excerpt'] ),
+			'post_type'    => \sanitize_text_field( $data['fe-post-type'] )
+		);
+
+		// Insert post.
+		return wp_insert_post( $post_data_array, true );
 	}
 
+	/**
+	 * Add featured image to the post.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function insert_featured_image( $post_id, $image ) {
+
+		// If not met requirements, bail.
+		if( ! $post_id || ! $image ) {
+			return;
+		}
+
+		$image_name = sanitize_file_name( $image['name'] );
+		$file       = $image['tmp_name'];
+
+		$upload_file = wp_upload_bits( $image_name, null, @file_get_contents( $file ) );
+		if ( ! $upload_file['error'] ) {
+
+			$wp_filetype = wp_check_filetype( $image_name, null );
+
+			$attachment = array(
+				'post_mime_type' => $wp_filetype['type'],
+				'post_parent'    => $post_id,
+				'post_title'     => preg_replace( '/\.[^.]+$/', '', $image_name ),
+				'post_content'   => '',
+				'post_status'    => 'inherit'
+			);
+
+			$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], $post_id );
+
+			if ( ! is_wp_error( $attachment_id ) ) {
+				// if attachment post was successfully created, insert it as a thumbnail to the post $post_id.
+				require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+
+				$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+
+				wp_update_attachment_metadata( $attachment_id,  $attachment_data );
+				set_post_thumbnail( $post_id, $attachment_id );
+			}
+		}
+	}
+
+
+	/**
+	 * Add featured image to the post.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function send_success_email( $post_id ) {
+		$email_details = \FES\get_email_details();
+		$post_url      = esc_url( get_post_permalink( $post_id ) );
+		$post_edit_url = esc_url( get_edit_post_link( $post_id ) );
+		$replace       = array( $post_url, $post_edit_url );
+		$str           = array( '{post_url}', '{post_edit_url}' );
+		extract( $email_details );
+
+		$message = str_replace( $str, $replace, $message );
+		wp_mail( $to, $subject, $message, $headers );
+	}
 }

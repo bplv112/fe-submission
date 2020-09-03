@@ -31,7 +31,7 @@ config.output.fontsDirectory  = '../fonts/';
 
 var scssConfig = Object.assign( {}, {
 	entry: {
-		'shared-ui': config.source.scss,
+		'fes-admin': config.source.scss,
 	},
 	output: {
 		filename: '[name].min.css',

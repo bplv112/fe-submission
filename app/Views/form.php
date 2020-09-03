@@ -8,7 +8,7 @@
 
 ?>
 
-<main class="sui-wrap">
+<main class="sui-wrap" id="sui-content">
 
 	<div class="sui-row">
 		<div class="sui-col-md-6">
@@ -101,7 +101,7 @@
 								aria-describedby="fe-post-content-error"
 							></textarea>
 
-							<span id="fe-post-content-error" class="sui-error-message" style="display: none;"></span>
+							<span id="fe-post-excerpt-error" class="sui-error-message" style="display: none;"></span>
 
 						</div>
 
@@ -134,19 +134,19 @@
 						<div class="sui-form-field">
 							<button
 							type="submit"
-							class="submit-post-fe"
 							value="settings"
-							class="sui-button sui-button-blue"
+							class="submit-post-fe sui-button"
+							id="submit-post-fe"
 							>
 
 								<span class="sui-loading-text">
 									<i class="sui-icon-save" aria-hidden="true"></i>
 									<?php esc_html_e( 'Submit Post', 'fe-submission' ); ?>
+									<i class="sui-loader" aria-hidden="true"></i>
 								</span>
-
-								<i class="sui-icon-loader sui-loading" aria-hidden="true"></i>
-
 							</button>
+							
+
 						</div>
 
 					</div>
@@ -157,5 +157,23 @@
 			<input type="hidden" name="action" value="fes_submit_post">
 		</form>
 
+		<!--Success Message -->
+		<div class="fes-success-message" id="fes-success-message">
+			<div class="sui-box sui-message sui-message-lg">
+
+				<div class="sui-message-content">
+
+					<p><?php esc_html_e( 'Thank you for submitting a post. Your post will now be reviewed for approval', 'fe-submission' ); ?></p>
+
+					<!--
+					NOTE:
+					Always add button(s) inside paragraph tag.
+					-->
+					<p><a href="." class="button sui-button"><?php esc_html_e( 'Submit another post', 'fe-submission' ); ?> </a></p>
+
+				</div>
+
+			</div>
+		</div>
 	</div>
 </main>
