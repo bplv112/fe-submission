@@ -48,7 +48,7 @@ class PostList implements Bootable {
 		}
 
 		$params['post_params'] = $this->get_posts_query();
-		AdminManager::$classes['Admin']->render( 'list', $params );
+		return AdminManager::$classes['Admin']->render( 'list', $params, true );
 	}
 
 	/**

@@ -69,7 +69,7 @@ class Form implements Bootable {
 			return;
 		}
 
-		AdminManager::$classes['Admin']->render( 'form' );
+		return AdminManager::$classes['Admin']->render( 'form', array(), true );
 	}
 
 	/**
