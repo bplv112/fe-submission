@@ -67,7 +67,7 @@
 						</tbody>
 				</table>
 				<nav class="sui-pagination-wrap">
-					<?php //\FES\Classes\PostList::pagination( $fes_posts->max_num_pages ); ?>
+					<?php \FES\Classes\PostList::pagination( $fes_posts->max_num_pages ); ?>
 				</nav>
 				<?php
 			endif;
