@@ -12,7 +12,7 @@
 	function frontendsubmissionform( element, options ) {
 		this.element   = element;
 		this.$el       = $( this.element );
-		this.$data     = '';
+		this.$data     = new FormData();
 		this.init();
 	}
 
@@ -23,10 +23,17 @@
 		},
 		attachEvents: function() {
 			let self = this;
+
+			// submit post form.
 			this.$el.on( 'submit', '.fes-post-form', function( e ) {
 				e.preventDefault();
-				self.$data = $( this ).serialize();
+				self.$data = new FormData( this );
 				self.submitPost( this );
+			});
+
+			//image upload.
+			$( '#fe-post-image' ).change( function() {
+				self.fileUpload( this );
 			});
 		},
 		submitPost: function( form ) {
@@ -34,7 +41,10 @@
 			$.ajax({
 				url: window.ajaxurl,
 				type: 'POST',
-				data: self.$data
+				data: self.$data,
+				cache: false,
+				contentType: false,
+				processData: false
 			})
 			.done( res => {
 				if ( false === res.success ) {
@@ -46,8 +56,21 @@
 							$( '.' + value ).addClass( 'sui-form-field-error' );
 						});
 					}
+				} else if ( true === res.success ) {
+					console.log( res );
 				}
 			});
+		},
+		fileUpload: function( input ) {
+			if ( input.files && input.files[0]) {
+				let reader = new FileReader();
+				reader.onload = function( e ) {
+					$( '#imagePreview' ).css( 'background-image', 'url(' + e.target.result + ')' );
+					$( '#imagePreview' ).hide();
+					$( '#imagePreview' ).fadeIn( 650 );
+				};
+				reader.readAsDataURL( input.files[0]);
+			}
 		}
 	});
 

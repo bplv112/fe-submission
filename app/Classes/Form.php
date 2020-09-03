@@ -119,10 +119,17 @@ class Form implements Bootable {
 			exit;
 		}
 
-		$form_validation = $this->validate_form( $_REQUEST );
+		// get request data.
+		$data = $_REQUEST;
+		// store image on the same var.
+		$data['fe-post-image'] = isset( $_FILES['fe-post-image'] ) ? $_FILES['fe-post-image'] : '';
+
+		// get request data.
+		$form_validation = $this->validate_form( $data );
 
 		if( empty( $form_validation ) ) {
-
+			var_dump( $data );
+			// $this->save_post( $data );
 		} else {
 			wp_send_json_error( $form_validation );
 		}
@@ -137,6 +144,7 @@ class Form implements Bootable {
 	 */
 	public function validate_form( $data ) {
 		$error = array();
+		$mandatory_fields = \FES\get_mandatory_fields();
 
 		// Check for empty Data.
 		if( empty( $data ) ) {
@@ -144,12 +152,12 @@ class Form implements Bootable {
 		}
 
 		foreach( $data as $key => $value ) {
-			if( empty( $value ) ) {
+			if( empty( $value ) && in_array( $key, $mandatory_fields ) ) {
 				$fields[] = $key;
 			}
 		}
 
-		if( ! $validated ) {
+		if( $fields ) {
 			$error = array( 'message' => __( 'Oops, mandatory fields missing', 'fe-submission' ) );
 			$error['fields'] = $fields;
 			$error['fields_message'] = __( 'Please fill out this field, it is mandatory and cannot be left empty', 'fe-submission' );
@@ -157,4 +165,16 @@ class Form implements Bootable {
 
 		return $error;
 	}
+
+	/**
+	 * Save the form.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function save_post( $data ) {
+
+	}
+
 }

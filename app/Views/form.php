@@ -25,7 +25,7 @@
 
 			</div>
 		</div>
-		<form method="POST" action="#" class="fes-post-form">
+		<form method="POST" action="#" class="fes-post-form" enctype="multipart/form-data">
 			<div class="sui-col-md-6">
 				<div class="sui-box">
 
@@ -52,7 +52,7 @@
 						<div class="sui-form-field">
 
 							<label for="fe-post-type" id="fe-post-type-label" class="sui-label"><?php esc_html_e( 'Post Type', 'fe-submission' ); ?></label>
-							<select id="fe-post-type" aria-labelledby="fe-post-type-label" class="sui-select">
+							<select id="fe-post-type" name="fe-post-type" aria-labelledby="fe-post-type-label" class="sui-select fe-post-type">
 								<?php
 								$all_post_types = get_post_types( array( 'public' => true ), 'objects' ); //only get public posttypes for now.
 								$avoid          = apply_filters( 'fes_post_type_exception', array( 'attachment' ) );// to avoid certain post types use this filter.
@@ -66,14 +66,14 @@
 
 								?>
 							</select>
-
+							<span id="fe-post-type-error" class="sui-error-message" style="display: none;" role="alert"></span>
 
 						</div>
 
 						<!-- Post Content -->
 						<div class="sui-form-field">
 
-							<label class="sui-label sui-label-editor" for="emailmessage"><?php esc_html_e( 'Email body', 'fe-submission' ); ?></label>
+							<label class="sui-label sui-label-editor" for="fe-post-content"><?php esc_html_e( 'Post content', 'fe-submission' ); ?></label>
 							<?php wp_editor(
 								'',
 								'fe-post-content',
@@ -86,6 +86,48 @@
 								)
 							); ?>
 							<span id="fe-post-content-error" class="sui-error-message" style="display: none;" role="alert"></span>
+						</div>
+
+						<!-- Post Excerpt -->
+						<div class="sui-form-field">
+
+							<label id="fe-post-excerpt-label" class="sui-label sui-label-editor" for="fe-post-content"><?php esc_html_e( 'Post Excerpt', 'fe-submission' ); ?></label>
+							<textarea
+								placeholder="<?php esc_html_e( 'Enter post excerpt', 'fe-submission' ); ?>"
+								id="fe-post-excerpt"
+								name="fe-post-excerpt"
+								class="sui-form-control fe-post-excerpt"
+								aria-labelledby="fe-post-excerpt-label"
+								aria-describedby="fe-post-content-error"
+							></textarea>
+
+							<span id="fe-post-content-error" class="sui-error-message" style="display: none;"></span>
+
+						</div>
+
+						<!-- Post Image -->
+						<div class="sui-form-field">
+
+							<label class="sui-label"><?php esc_html_e( 'Post Image', 'fe-submission' ); ?></label>
+
+							<div class="avatar-upload">
+								<div class="avatar-edit">
+									<input 
+									type="file"
+									name="fe-post-image"
+									id="fe-post-image"
+									accept=".png, .jpg, .jpeg" 
+									class="fe-post-image"
+									/>
+									<label for="fe-post-image"></label>
+
+								</div>
+								<div class="avatar-preview">
+									<div id="imagePreview" style="">
+									</div>
+								</div>
+							</div>
+							<span id="fe-post-image-error" class="sui-error-message" style="display: none;"></span>
 						</div>
 
 						<!-- Submit button -->
