@@ -4,8 +4,8 @@
  * @version 1.0.0
  */
 /*
-Plugin Name: Front-end Submission
-Description: Front-end Submission plugin
+Plugin Name: Collins helper
+Description: Collins helper plugin by bplv
 Author: Bplv
 Version: 1.0.0
 */

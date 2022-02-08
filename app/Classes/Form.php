@@ -30,10 +30,10 @@ class Form implements Bootable {
 	 * @return void
 	 */
 	public function boot() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_shortcode( 'display_fe_form', array( $this, 'display_form' ) );
-		add_filter( 'body_class', array( $this, 'add_body_class' ) );
-		add_action( 'wp_ajax_fes_submit_post', array( $this, 'process_form' ) );
+		// add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
+		// add_shortcode( 'display_fe_form', array( $this, 'display_form' ) );
+		// add_filter( 'body_class', array( $this, 'add_body_class' ) );
+		// add_action( 'wp_ajax_fes_submit_post', array( $this, 'process_form' ) );
 	}
 
 	/**

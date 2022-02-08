@@ -32,7 +32,7 @@ class AdminManager extends Manager {
 		self::$classes['Admin']->boot();
 
 		// Boot the PostType class instance.
-		self::$classes['PostType']->boot();
+		self::$classes['Options']->boot();
 	}
 
 	/**
@@ -47,7 +47,7 @@ class AdminManager extends Manager {
 		self::$classes['Admin'] = $this->app->resolve( \FES\Classes\Admin::class );
 
 		// Register the Options class instance.
-		self::$classes['PostType'] = $this->app->resolve( \FES\Classes\PostType::class );
+		self::$classes['Options'] = $this->app->resolve( \FES\Classes\Options::class );
 
 	}
 }
