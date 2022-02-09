@@ -42,7 +42,7 @@ class Banners implements Bootable {
 	 */
 	public function print_privacy_notice() {
 
-		$lang    = 'en';
+		$lang    = ICL_LANGUAGE_CODE ? ICL_LANGUAGE_CODE : 'fr';
 		$options = get_option( 'fes_collins_settings' );
 		$params  = [
 			'options' => $options,
