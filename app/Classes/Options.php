@@ -102,14 +102,14 @@ class Options implements Bootable {
 	 */
 	public function enqueue() {
 		// Enqueue style.
-		wp_enqueue_style( 'fes-main-css', FES_URL . 'assets/css/fes-admin.min.css', array(), '1.3' );
+		wp_enqueue_style( 'fes-main-css', FES_URL . 'assets/css/fes-admin.min.css', array(), '1.3.3' );
 
 		// Script
 		wp_enqueue_script(
 			'fes-js',
 			FES_URL . 'assets/js/fes-admin.min.js',
 			array( 'jquery' ),
-			'1.2.1',
+			'1.2.3',
 			true
 		);
 	}
