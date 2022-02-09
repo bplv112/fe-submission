@@ -58,7 +58,8 @@ class Options implements Bootable {
 			'fr'                 => '',
 			'privacy_hook_name'  => '',
 			'promo_banner_en'    => '',
-			'promo_banner_fr'    => ''
+			'promo_banner_fr'    => '',
+			'fe_enable_banner'   => "0",
 		);
 		$options         = wp_parse_args( $options, $defaults );
 		$current_page = admin_url( "admin.php?page=".$_GET["page"] );
@@ -71,15 +72,25 @@ class Options implements Bootable {
 	}
 
 	public function fes_main_process_save() {
-		$option[ 'fr' ]                = wp_kses_post( $_POST['fe-post-content-fr'] );
-		$option[ 'en' ]                = wp_kses_post( $_POST['fe-post-content-en'] );
-		$option[ 'privacy_hook_name' ] = wp_kses_post( $_POST['fe-post-hook'] );
-		$banner_en 					   = isset( $_FILES['fe-post-image-en'] ) ? $_FILES['fe-post-image-en'] : '';
-		$banner_fr 					   = isset( $_FILES['fe-post-image-fr'] ) ? $_FILES['fe-post-image-fr'] : '';
-		$option['promo_banner_en']     = $this->get_attachment( $banner_en );
-		$option['promo_banner_fr']     = $this->get_attachment( $banner_fr );
-
-		update_option( 'fes_collins_settings', $option);
+		$options      = get_option( 'fes_collins_settings' );
+		$defaults     = array(
+			'en'                 => '',
+			'fr'                 => '',
+			'privacy_hook_name'  => '',
+			'promo_banner_en'    => '',
+			'promo_banner_fr'    => '',
+			'fe_enable_banner'   => '0',
+		);
+		$options = wp_parse_args( $options, $defaults );
+		
+		$options[ 'fe_enable_banner' ]  = isset( $_POST['fe-enable-banner'] ) ? esc_html( $_POST['fe-enable-banner'] ) : '0';
+		$options[ 'fr' ]                = isset( $_POST['fe-post-content-fr'] ) ? wp_kses_post( $_POST['fe-post-content-fr'] ) : $options['fr'];
+		$options[ 'en' ]                = isset( $_POST['fe-post-content-en'] ) ? wp_kses_post( $_POST['fe-post-content-en'] ) : $options['en'];
+		$options[ 'privacy_hook_name' ] = isset( $_POST['fe-post-hook'] ) ? esc_html( $_POST['fe-post-hook'] ) : $options['fe-post-hook'];
+		$options['promo_banner_en']     = isset( $_FILES['fe-post-image-en'] ) && '' !== $_FILES['fe-post-image-en']['name'] ? $this->get_attachment( $_FILES['fe-post-image-en'] ) : $options['promo_banner_en'];
+		$options['promo_banner_fr']     = isset( $_FILES['fe-post-image-fr'] ) && '' !== $_FILES['fe-post-image-fr']['name'] ? $this->get_attachment( $_FILES['fe-post-image-fr'] ) : $options['promo_banner_fr'];
+		
+		update_option( 'fes_collins_settings', $options);
 	}
 
 	/**
@@ -132,6 +143,8 @@ class Options implements Bootable {
 				'post_content'   => '',
 				'post_status'    => 'inherit'
 			);
+
+			$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'] );
 			
 			if ( ! is_wp_error( $attachment_id ) ) {
 				return wp_get_attachment_url( $attachment_id );

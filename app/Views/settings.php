@@ -81,21 +81,40 @@
 
 						</div>
 
+						<!-- Post Title -->
+						<div class="sui-form-field">
+
+							<label for="fe-enable-banner" id="fe-enable-banner" class="sui-label"><?php echo esc_html__( 'Enable Banner', 'fe-submission' ); ?></label>
+							<input
+								type="checkbox"
+								id="fe-enable-banner"
+								class="sui-form-control fe-enable-banner"
+								name="fe-enable-banner"
+								aria-labelledby="fe-enable-banner"
+								aria-describedby="fe-enable-banner-error"
+								<?php checked( '1', esc_html( $options['fe_enable_banner'] ) ); ?>
+								value="1"
+							/>
+							<span id="fe-enable-banner-error" class="sui-error-message" style="display: none;" role="alert"></span>
+
+						</div>
+
 						<!-- Promo banner French -->
 						<div class="sui-form-field">
 
 							<label for="fe-post-hook" id="fe-post-hook" class="sui-label"><?php echo esc_html__( 'Promo banner French', 'fe-submission' ); ?></label>
 							<div class="avatar-upload">
 								<div class="avatar-edit">
-									<input
-									type="file"
-									name="fe-post-image-fr"
-									id="fe-post-image-fr"
-									accept=".png, .jpg, .jpeg"
-									class="fe-post-image-fr"
-									/>
-									<label for="fe-post-image-fr"></label>
-
+									<div class="upload-btn-wrapper">
+										<button class="btn"><?php echo esc_html__( 'Upload a file', 'fe-submission' ); ?></button>
+										<input
+										type="file"
+										name="fe-post-image-fr"
+										id="fe-post-image-fr"
+										accept=".png, .jpg, .jpeg"
+										class="fe-post-image-fr"
+										/>
+									</div>
 								</div>
 								<div class="avatar-preview">
 									<div id="imagePreview-fr" style="background-image:url('<?php echo esc_html( $options['promo_banner_fr'] ); ?>')">
@@ -112,15 +131,16 @@
 							<label for="fe-post-hook" id="fe-post-hook" class="sui-label"><?php echo esc_html__( 'Promo banner Eng', 'fe-submission' ); ?></label>
 							<div class="avatar-upload">
 								<div class="avatar-edit">
-									<input
-									type="file"
-									name="fe-post-image-en"
-									id="fe-post-image-en"
-									accept=".png, .jpg, .jpeg"
-									class="fe-post-image-en"
-									/>
-									<label for="fe-post-image-en"></label>
-
+									<div class="upload-btn-wrapper">
+										<button class="btn"><?php echo esc_html__( 'Upload a file', 'fe-submission' ); ?></button>
+										<input
+										type="file"
+										name="fe-post-image-en"
+										id="fe-post-image-en"
+										accept=".png, .jpg, .jpeg"
+										class="fe-post-image-en"
+										/>
+									</div>
 								</div>
 								<div class="avatar-preview">
 									<div id="imagePreview-en" style="background-image:url('<?php echo esc_html( $options['promo_banner_en'] ); ?>')">
