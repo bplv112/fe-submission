@@ -80,6 +80,57 @@
 							<span id="fe-post-hook-error" class="sui-error-message" style="display: none;" role="alert"></span>
 
 						</div>
+
+						<!-- Promo banner French -->
+						<div class="sui-form-field">
+
+							<label for="fe-post-hook" id="fe-post-hook" class="sui-label"><?php echo esc_html__( 'Promo banner French', 'fe-submission' ); ?></label>
+							<div class="avatar-upload">
+								<div class="avatar-edit">
+									<input
+									type="file"
+									name="fe-post-image-fr"
+									id="fe-post-image-fr"
+									accept=".png, .jpg, .jpeg"
+									class="fe-post-image-fr"
+									/>
+									<label for="fe-post-image-fr"></label>
+
+								</div>
+								<div class="avatar-preview">
+									<div id="imagePreview-fr" style="background-image:url('<?php echo esc_html( $options['promo_banner_fr'] ); ?>')">
+									</div>
+								</div>
+							</div>
+							<span id="fe-post-image-fr-error" class="sui-error-message" style="display: none;"></span>
+
+						</div>
+
+						<!-- Promo banner EN -->
+						<div class="sui-form-field">
+
+							<label for="fe-post-hook" id="fe-post-hook" class="sui-label"><?php echo esc_html__( 'Promo banner Eng', 'fe-submission' ); ?></label>
+							<div class="avatar-upload">
+								<div class="avatar-edit">
+									<input
+									type="file"
+									name="fe-post-image-en"
+									id="fe-post-image-en"
+									accept=".png, .jpg, .jpeg"
+									class="fe-post-image-en"
+									/>
+									<label for="fe-post-image-en"></label>
+
+								</div>
+								<div class="avatar-preview">
+									<div id="imagePreview-en" style="background-image:url('<?php echo esc_html( $options['promo_banner_en'] ); ?>')">
+									</div>
+								</div>
+							</div>
+							<span id="fe-post-image-en-error" class="sui-error-message" style="display: none;"></span>
+
+						</div>
+
 						<input type="hidden" name="fe-options-save" value="1">
 						<!-- Submit button -->
 						<div class="sui-form-field">

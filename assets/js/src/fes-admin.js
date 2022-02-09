@@ -1,6 +1,6 @@
 import './form';
 
 jQuery( document ).ready( function() {
-	jQuery( 'body.fes-form-fe' ).frontendsubmissionform();
+	jQuery( 'body.toplevel_page_collins' ).frontendsubmissionform();
 	jQuery( document ).trigger( 'fes.ready' );
 });

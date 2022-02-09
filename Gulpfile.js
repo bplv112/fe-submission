@@ -166,7 +166,7 @@ gulp.task( 'admin:scripts', async function( cb ) {
 				} ]
 			]
 		}),
-		concat( 'admin.js' ),
+		concat( 'fes-admin.js' ),
 		uglify( uglifyOptions ),
 		rename({
 			suffix: '.min'
@@ -183,7 +183,6 @@ gulp.task( 'admin:scripts', async function( cb ) {
 
 // Task: Build admin files
 gulp.task( 'build', gulp.parallel(
-	'admin:scripts',
 	'admin:styles'
 ));
 

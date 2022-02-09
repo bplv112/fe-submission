@@ -24,56 +24,23 @@
 		attachEvents: function() {
 			let self = this;
 
-			// submit post form.
-			this.$el.on( 'submit', '.fes-post-form', function( e ) {
-				e.preventDefault();
-				$( this ).find( '.sui-loader' ).addClass( 'sui-loading' );
-				self.$data = new FormData( this );
-				self.submitPost( this );
-			});
-
 			//image upload.
-			$( '#fe-post-image' ).change( function() {
-				self.fileUpload( this );
+			$( '#fe-post-image-fr' ).change( function() {
+				self.fileUpload( this, 'fr' );
 			});
-		},
-		submitPost: function( form ) {
-			var self = this;
-			$.ajax({
-				url: window.ajaxurl,
-				type: 'POST',
-				data: self.$data,
-				cache: false,
-				contentType: false,
-				processData: false
-			})
-			.done( res => {
-				if ( false === res.success ) {
-					$( this ).find( '.error-message' ).append( res.data.message );
-					$( '#submit-post-fe' ).find( '.sui-loader' ).removeClass( 'sui-loading' );
-					if ( res.data.fields ) {
-						$.each( res.data.fields, function( key, value ) {
-							$( '#' + value + '-error' ). append( res.data.fields_message );
-							$( '#' + value + '-error' ).show();
-							$( '.' + value ).addClass( 'sui-form-field-error' );
-						});
-					}
-				} else if ( true === res.success ) {
-					$( '#submit-post-fe' ).find( '.sui-loader' ).removeClass( 'sui-loading' );
-					$( '.fes-post-form' ).hide();
-					$( '.fes-success-message' ).fadeIn( 650 );
-					$( '#sui-content' )[0].scrollIntoView();
+			$( '#fe-post-image-en' ).change( function() {
+				self.fileUpload( this, 'en' );
+			});
 
-				}
-			});
 		},
-		fileUpload: function( input ) {
+		fileUpload: function( input, locale ) {
+			
 			if ( input.files && input.files[0]) {
 				let reader = new FileReader();
 				reader.onload = function( e ) {
-					$( '#imagePreview' ).css( 'background-image', 'url(' + e.target.result + ')' );
-					$( '#imagePreview' ).hide();
-					$( '#imagePreview' ).fadeIn( 650 );
+					$( '#imagePreview-' + locale ).css( 'background-image', 'url(' + e.target.result + ')' );
+					$( '#imagePreview-' + locale ).hide();
+					$( '#imagePreview-' + locale ).fadeIn( 650 );
 				};
 				reader.readAsDataURL( input.files[0]);
 			}
