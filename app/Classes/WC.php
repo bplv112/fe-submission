@@ -31,12 +31,13 @@ class WC implements Bootable {
 	public function boot() {
 		$options = get_option( 'fes_collins_settings' );
 		add_action( $options['privacy_hook_name'], array( $this, 'print_privacy_notice' ) );
+		add_filter( 'dgwt/wcas/labels', array( $this, 'search_label_collins' ) );
 	}
 
 	/**
 	 * Enqueue method.
 	 *
-	 * @since  2.0.0
+	 * @since  1.0.0
 	 * @access public
 	 * @return void
 	 */
@@ -45,6 +46,19 @@ class WC implements Bootable {
 		$options = get_option( 'fes_collins_settings' );
 
 		echo $options [$lang];
+	}
+
+	/**
+	 * Filter for search.
+	 *
+	 * @since  1.0.0
+	 * @access public
+	 * @return void
+	 */
+	public function search_label_collins() {
+		$lang                             = ICL_LANGUAGE_CODE;
+		$searchArgs['search_placeholder'] = 'en' === $lang ? 'Search' : $searchArgs['search_placeholder'];
+		return $searchArgs;
 	}
 
 }
