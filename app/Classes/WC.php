@@ -32,6 +32,7 @@ class WC implements Bootable {
 		$options = get_option( 'fes_collins_settings' );
 		add_action( $options['privacy_hook_name'], array( $this, 'print_privacy_notice' ) );
 		add_filter( 'dgwt/wcas/labels', array( $this, 'search_label_collins' ) );
+		add_action( 'template_redirect', [ $this, 'redirect_to_login' ] );
 	}
 
 	/**
@@ -59,6 +60,22 @@ class WC implements Bootable {
 		$lang                             = ICL_LANGUAGE_CODE;
 		$searchArgs['search_placeholder'] = 'en' === $lang ? 'Search' : $searchArgs['search_placeholder'];
 		return $searchArgs;
+	}
+
+	/**
+	 * Template redirection.
+	 * @since 1.0.0
+	 * @access public
+	 * @return void
+	 */
+	function redirect_to_login() {
+		global $wp;
+
+		if( 'categories/shoes-for-men' === $wp->request ) {
+			wp_safe_redirect( esc_url(home_url( 'categories/men/shoes-for-men' )));
+			exit();
+		}
+
 	}
 
 }

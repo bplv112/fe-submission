@@ -34,6 +34,8 @@ if ( ! defined( 'FES_TEMPLATE' ) ) {
 	define( 'FES_TEMPLATE', FES_DIRECTORY . 'app/Views/' );
 }
 
-
+if ( ! class_exists( 'SitePress' ) ) {
+	define( 'ICL_LANGUAGE_CODE', 'en' );
+}
 
 require 'app/bootstrap-app.php';
